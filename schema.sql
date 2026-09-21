@@ -1,12 +1,12 @@
 CREATE TABLE client (
-    client_id INTEGER PRIMARY KEY,
+    client_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     phone VARCHAR(20)
 );
 
 CREATE TABLE project (
-    project_id INTEGER PRIMARY KEY,
+    project_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     client_id INTEGER NOT NULL,
     name VARCHAR(100) NOT NULL,
     description TEXT,
@@ -16,7 +16,7 @@ CREATE TABLE project (
 );
 
 CREATE TABLE service (
-    service_id INTEGER PRIMARY KEY,
+    service_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description TEXT
 );
