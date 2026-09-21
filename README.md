@@ -22,4 +22,10 @@ The price is stored in `project_service` rather than `service`, because the pric
 
 ## ER Diagram
 
+The ER diagram shows the structure of the database and the relationships between the four tables. Crow's Foot notation is used to represent the one-to-many and many-to-many relationships.
+
 ![ER Diagram](docs/er_diagram.png)
+
+## Setup and Testing
+
+The database was created using PostgreSQL running in Docker and tested through DBeaver. The `schema.sql` script was executed successfully to verify that all tables and relationships were created correctly.
