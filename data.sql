@@ -17,12 +17,12 @@ VALUES
     -- Add projects for existing clients
 INSERT INTO project (client_id, name, description, status, start_date)
 VALUES
-    (2, 'Portfolio Website', 'Design and development of a new portfolio website', 'active', '2026-08-15'),
-    (2, 'Brand Refresh', 'Update of the existing visual identity', 'completed', '2026-05-10'),
-    (3, 'Online Store', 'Design and development of an online store', 'active', '2026-09-01'),
-    (3, 'UX Review', 'Review and improvement of the current user experience', 'completed', '2026-03-20'),
-    (4, 'Booking Website', 'New website with an online booking experience', 'active', '2026-09-15'),
-    (5, 'Company Website', 'New responsive website for the company', 'planned', '2026-11-01');
+    (1, 'Portfolio Website', 'Design and development of a new portfolio website', 'active', '2026-08-15'),
+    (1, 'Brand Refresh', 'Update of the existing visual identity', 'completed', '2026-05-10'),
+    (2, 'Online Store', 'Design and development of an online store', 'active', '2026-09-01'),
+    (2, 'UX Review', 'Review and improvement of the current user experience', 'completed', '2026-03-20'),
+    (3, 'Booking Website', 'New website with an online booking experience', 'active', '2026-09-15'),
+    (4, 'Company Website', 'New responsive website for the company', 'planned', '2026-11-01');
 
     -- Connect projects to services and set a price for each service
 INSERT INTO project_service (project_id, service_id, price)
