@@ -14,7 +14,7 @@ VALUES
     ('UX/UI Design', 'User experience and interface design'),
     ('Branding', 'Visual identity and branding');
 
-    -- Add projects for existing clients
+-- Add projects for existing clients
 INSERT INTO project (client_id, name, description, status, start_date)
 VALUES
     (1, 'Portfolio Website', 'Design and development of a new portfolio website', 'active', '2026-08-15'),
@@ -22,7 +22,8 @@ VALUES
     (2, 'Online Store', 'Design and development of an online store', 'active', '2026-09-01'),
     (2, 'UX Review', 'Review and improvement of the current user experience', 'completed', '2026-03-20'),
     (3, 'Booking Website', 'New website with an online booking experience', 'active', '2026-09-15'),
-    (4, 'Company Website', 'New responsive website for the company', 'planned', '2026-11-01');
+    (4, 'Company Website', 'New responsive website for the company', 'planned', '2026-11-01'),
+    (3, 'Brand Strategy', 'Planning a new direction for the visual identity', 'planned', '2026-12-01');
 
     -- Connect projects to services and set a price for each service
 INSERT INTO project_service (project_id, service_id, price)

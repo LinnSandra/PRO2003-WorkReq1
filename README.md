@@ -28,7 +28,7 @@ This query combines project and client data to show which client each project be
 
 #### Aggregate Function and GROUP BY
 
-This query calculates the total service cost for each project using `SUM` and `GROUP BY`.
+This query calculates the total service cost and counts the services assigned to each project using SUM, COUNT, and GROUP BY. Only projects with assigned services are included.
 
 ![GROUP BY query result](docs/query5_total_cost.png)
 
@@ -43,6 +43,14 @@ This query counts the projects for each client and uses `HAVING` to show clients
 This query uses a subquery to find service entries with a price above the average service price.
 
 ![Subquery result](docs/query7_subquery.png)
+
+### Improvements After Feedback
+
+I added a planned project, Brand Strategy, so the test data still includes active, completed, and planned projects after the UPDATE statement.
+
+Query 1 now shows active projects with their clients, ordered by start date. Query 2 shows planned projects starting from November 2026, including the client for each project.
+
+I combined the total service cost and service count into Query 5 because they use the same join and grouping. Query 8 now finds projects without assigned services using LEFT JOIN and IS NULL. Brand Strategy provides a test case for this query.
 
 ### How to Run
 
@@ -62,7 +70,9 @@ A running PostgreSQL server and a database client such as DBeaver are required.
 
 ### Setup and Testing
 
-The database was created using PostgreSQL running in Docker and tested through DBeaver. The database setup was tested from scratch by running `schema.sql` followed by `data.sql`. All eight queries in `queries.sql` were then executed successfully against the populated database.
+The database runs in PostgreSQL using Docker and is tested through DBeaver.
+
+After the improvements, the complete setup was tested in a separate empty database named studio_wr2_test. I ran schema.sql, followed by data.sql, and then all eight queries in queries.sql. All scripts completed without errors, and the query results matched the expected data.
 
 ## Work Requirement 1
 

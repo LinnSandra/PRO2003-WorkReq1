@@ -1,12 +1,22 @@
--- Query 1: Show all active projects
-SELECT *
+-- Query 1: Show active projects with their clients, oldest first
+SELECT project.name AS project_name,
+       client.name AS client_name,
+       project.start_date
 FROM project
-WHERE status = 'active';
+JOIN client ON project.client_id = client.client_id
+WHERE project.status = 'active'
+ORDER BY project.start_date ASC, project.project_id;
 
--- Query 2: Show projects ordered by start date
-SELECT name, status, start_date
+-- Query 2: Show planned projects with their clients starting from November 2026
+SELECT project.name AS project_name,
+       client.name AS client_name,
+       project.status,
+       project.start_date
 FROM project
-ORDER BY start_date DESC;
+JOIN client ON project.client_id = client.client_id
+WHERE project.status = 'planned'
+  AND project.start_date >= DATE '2026-11-01'
+ORDER BY project.start_date ASC, project.project_id;
 
 -- Query 3: Show each project with its client
 SELECT project.name AS project_name, client.name AS client_name
@@ -22,13 +32,14 @@ JOIN project_service ON project.project_id = project_service.project_id
 JOIN service ON project_service.service_id = service.service_id
 ORDER BY project.name;
 
--- Query 5: Calculate the total service cost for each project
+-- Query 5: Calculate the total cost and service count for projects with services
 SELECT project.name AS project_name,
-       SUM(project_service.price) AS total_cost
+       SUM(project_service.price) AS total_cost,
+       COUNT(project_service.service_id) AS service_count
 FROM project
 JOIN project_service ON project.project_id = project_service.project_id
 GROUP BY project.project_id, project.name
-ORDER BY total_cost DESC;
+ORDER BY total_cost DESC, project.project_id;
 
 -- Query 6: Show clients that have more than one project
 SELECT client.name AS client_name,
@@ -51,10 +62,13 @@ WHERE project_service.price > (
 )
 ORDER BY project_service.price DESC;
 
--- Query 8: Count the number of services used in each project
+-- Query 8: Show projects that have no services assigned
 SELECT project.name AS project_name,
-       COUNT(project_service.service_id) AS service_count
+       client.name AS client_name,
+       project.status
 FROM project
-JOIN project_service ON project.project_id = project_service.project_id
-GROUP BY project.project_id, project.name
-ORDER BY service_count DESC;
+JOIN client ON project.client_id = client.client_id
+LEFT JOIN project_service
+    ON project.project_id = project_service.project_id
+WHERE project_service.project_id IS NULL
+ORDER BY project.name, project.project_id;
