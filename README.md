@@ -10,7 +10,7 @@ PostgreSQL database design, implementation, querying, and administration for Wor
 - `database/index.sql` contains the commands used to compare query plans before and after adding an index.
 - `database/transactions.sql` demonstrates related changes using ROLLBACK and COMMIT.
 - `database/roles.sql` contains the role setup and permission tests.
-- `backups/studio_wr3_backup.dump` contains the database backup taken after the Work Requirement 3 tests.
+- `backups/studio_wr3_backup.dump` contains the database backup taken after the successful COMMIT test.
 
 ## Work Requirement 3
 
@@ -218,9 +218,14 @@ docker exec ONF-Postgres psql -U postgres -d studio_wr3_restore_test -c "SELECT 
 docker exec ONF-Postgres psql -U postgres -d studio_wr3_restore_test -c "SELECT p.name AS project_name, p.status, s.name AS service_name, ps.price FROM public.project p JOIN public.project_service ps ON p.project_id = ps.project_id JOIN public.service s ON ps.service_id = s.service_id WHERE p.project_id = 7;"
 ```
 
-The restored database contained 4 clients, 7 projects, 4 services,
-and 13 project-service entries. Brand Strategy was active with
-Branding assigned at 15,000, as expected.
+I compared row counts in the original database, studio_wr2_test,
+and the restored database, studio_wr3_restore_test. Both contained
+4 clients, 7 projects, 4 services, and 13 project-service entries.
+
+![Original and restored database row counts](docs/backup_row_comparison.png)
+
+The restored database also contained Brand Strategy with status
+active and Branding assigned at 15,000, as expected.
 
 ![Backup and restore verification](docs/backup_restore_verified.png)
 
