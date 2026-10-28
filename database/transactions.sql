@@ -2,6 +2,10 @@
 -- The test data uses project 7 (Brand Strategy) and service 4 (Branding).
 -- Expected starting state: planned, with no assigned services.
 
+-- Run Tests 1 and 2 first.
+-- Run Test 3 statement by statement; it contains an intentional error.
+-- After the error, execute ROLLBACK before the verification query.
+
 -- Test 1: Make two related changes, then undo both.
 BEGIN;
 
@@ -49,3 +53,32 @@ LEFT JOIN public.project_service
 LEFT JOIN public.service
     ON project_service.service_id = service.service_id
 WHERE project.project_id = 7;
+
+-- Test 3: A constraint error prevents partial changes from being saved.
+-- Run after Test 2, with the project active and the price at 15000.
+-- Execute each statement separately in the same connection.
+
+BEGIN;
+
+UPDATE public.project
+SET status = 'completed'
+WHERE project_id = 7;
+
+-- Expected error: violates project_service_price_check.
+UPDATE public.project_service
+SET price = -100
+WHERE project_id = 7
+  AND service_id = 4;
+
+-- Run after the expected error.
+ROLLBACK;
+
+-- Expected result: Brand Strategy | active | 15000.00
+SELECT p.name,
+       p.status,
+       ps.price
+FROM public.project p
+JOIN public.project_service ps
+    ON p.project_id = ps.project_id
+WHERE p.project_id = 7
+  AND ps.service_id = 4;
